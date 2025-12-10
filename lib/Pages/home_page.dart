@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpt_clone/widgets/search_section.dart';
 import 'package:gpt_clone/widgets/side_bar.dart';
 
 class HomePage extends StatelessWidget  {
@@ -12,7 +13,10 @@ class HomePage extends StatelessWidget  {
           SideBar(),
           Column(
             children: [
-
+              Expanded(child: SearchSection()),
+              Container(
+                height: 20,
+              )
           ],)
         ],
       )

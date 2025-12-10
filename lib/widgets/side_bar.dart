@@ -18,61 +18,47 @@ class _SideBarState extends State<SideBar> {
       width: isCollapsed ? 60 : 150,
       color: AppColors.sideNav,
       child: Column(
-        crossAxisAlignment: isCollapsed
-            ? CrossAxisAlignment.center
-            : CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
           Icon(
             Icons.auto_awesome_mosaic,
             color: AppColors.whiteColor,
-            size: 30,
+            size: isCollapsed? 30 : 60,
           ),
-          const SizedBox(height: 16),
-          SideBarButton(isCollapsed: isCollapsed, icon: Icons.add, text: "New Chat"),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Icon(Icons.search, color: AppColors.iconGrey, size: 18),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Icon(Icons.language, color: AppColors.iconGrey, size: 18),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Icon(
-              Icons.auto_awesome,
-              color: AppColors.iconGrey,
-              size: 18,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: isCollapsed
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                SideBarButton(isCollapsed: isCollapsed, icon: Icons.add, text: "New Chat"),
+                SideBarButton(isCollapsed: isCollapsed, icon: Icons.search, text: "Search"),
+                SideBarButton(isCollapsed: isCollapsed, icon: Icons.language, text: "Language"),
+                SideBarButton(isCollapsed: isCollapsed, icon: Icons.auto_awesome, text: "Discover"),
+                SideBarButton(isCollapsed: isCollapsed, icon: Icons.cloud_outlined, text: "Library"),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isCollapsed = !isCollapsed;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    child: Icon(
+                      isCollapsed
+                          ? Icons.keyboard_arrow_right
+                          : Icons.keyboard_arrow_left,
+                      color: AppColors.iconGrey,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Icon(
-              Icons.cloud_outlined,
-              color: AppColors.iconGrey,
-              size: 18,
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isCollapsed = !isCollapsed;
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              child: Icon(
-                isCollapsed
-                    ? Icons.keyboard_arrow_right
-                    : Icons.keyboard_arrow_left,
-                color: AppColors.iconGrey,
-                size: 18,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
+        const SizedBox(height: 16),
         ],
       ),
     );
