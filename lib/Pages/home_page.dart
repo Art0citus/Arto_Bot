@@ -4,7 +4,7 @@ import 'package:gpt_clone/theme/colors.dart';
 import 'package:gpt_clone/widgets/search_section.dart';
 import 'package:gpt_clone/widgets/side_bar.dart';
 
-class HomePage extends StatefulWidget  {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
@@ -12,12 +12,13 @@ class HomePage extends StatefulWidget  {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  String fullResponse = "";
   @override
   void initState() {
     super.initState();
     ChatWebService().connect();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,57 +29,77 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Expanded(child: SearchSection()),
+                StreamBuilder(stream: ChatWebService().contentStream, builder: (context, snapshot){
+                  if (snapshot.connectionState == ConnectionState.waiting){
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  fullResponse += snapshot.data?['data'] ?? '';
+                  return Text(fullResponse);
+                }),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: Wrap(
                     children: [
                       Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('Github', style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.footerGrey
-                      ),
-                      )
-                      ),
-                      Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('Artocitus', style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.footerGrey
-                      ),
-                      )
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'Github',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.footerGrey,
+                          ),
+                        ),
                       ),
                       Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('Blog', style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.footerGrey
-                      ),
-                      )
-                      ),
-                      Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('LinkedIn', style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.footerGrey
-                      ),
-                      )
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'Artocitus',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.footerGrey,
+                          ),
+                        ),
                       ),
                       Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('English (English)', style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.footerGrey
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'Blog',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.footerGrey,
+                          ),
+                        ),
                       ),
-                      )
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'LinkedIn',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.footerGrey,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'English (English)',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.footerGrey,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                )
-            ],),
-          )
+                ),
+              ],
+            ),
+          ),
         ],
-      )
+      ),
     );
   }
 }
