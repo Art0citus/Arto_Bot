@@ -1,4 +1,4 @@
-# 🔍 Info Bot AI
+# 🔍 Arto Bot AI
 
 A **Perplexity-style AI search & Q&A app** built using **Flutter**, **FastAPI**, and **Google Gemini API**.
 
